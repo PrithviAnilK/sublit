@@ -12,6 +12,7 @@ import {
 import { useStoreState } from 'easy-peasy';
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
+import Copy from './Copy';
 
 interface SubmissionsViewProps {}
 
@@ -53,6 +54,9 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
             bg="#ffffff"
         >
             <Heading>Submissions</Heading>
+            <Box my="5">
+                <Copy classCode={classCode} />
+            </Box>
             <Table variant="striped" colorScheme="purple" p="5">
                 <Thead>
                     <Tr>

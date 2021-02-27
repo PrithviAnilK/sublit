@@ -12,10 +12,10 @@ import {
     Th,
     Thead,
     Tr,
-    useDisclosure
+    useDisclosure,
 } from '@chakra-ui/react';
+import { useStoreActions } from 'easy-peasy';
 import React, { useState } from 'react';
-import axios from '../../utils/axios';
 import history from '../../utils/history';
 import TestCaseModal from './TestCase';
 
@@ -32,12 +32,16 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
     >([]);
     const [isLoading, setLoading] = useState(false);
 
+    const { addAssignment } = useStoreActions(
+        (actions: any) => actions.assignment
+    );
+
     const onSubmit = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.preventDefault();
         setLoading(true);
-        await axios.put(`/assignment/${classCode}`, {
+        addAssignment({
             question,
             inputDesc,
             outputDesc,

@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Heading } from '@chakra-ui/react';
 import { useStoreState } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
@@ -62,7 +62,9 @@ const Student = () => {
                     <GridItem colSpan={6} rowSpan={6}>
                         <Editor testCases={testCases}/>
                     </GridItem>
-                    <GridItem colSpan={5} rowSpan={3} bg="tomato" />
+                    <GridItem colSpan={5} rowSpan={3} padding='3' bg="white" borderRadius='lg' >
+                        <Heading>Output</Heading>
+                    </GridItem>
                 </Grid>
             </Box>
         </Box>

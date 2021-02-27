@@ -16,7 +16,7 @@ const Student = () => {
     }, []);
 
     return (
-        <Box>
+        <Box className='amin-gradient'>
             <Box padding="10px">
                 <Grid
                     h="100vh"
@@ -30,7 +30,7 @@ const Student = () => {
                     <GridItem colSpan={6} rowSpan={6}>
                         <Editor />
                     </GridItem>
-                    <GridItem colSpan={6} rowSpan={4} bg="tomato" />
+                    <GridItem colSpan={5} rowSpan={3} bg="tomato" />
                 </Grid>
             </Box>
         </Box>

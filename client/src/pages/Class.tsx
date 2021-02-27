@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { useStoreState } from 'easy-peasy';
 import React from 'react';
 import TeacherView from '../components/Teacher/TeacherView';
+import Student from './Student';
 
 interface ClassProps {}
 const Class: React.FC<ClassProps> = ({}) => {
@@ -20,7 +21,7 @@ const Class: React.FC<ClassProps> = ({}) => {
                 <TeacherView />
             </Box>
         );
-    else return <>student</>;
+    else return <><Student/></>;
 };
 
 export default Class;

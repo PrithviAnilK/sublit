@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
+import server from '../../utils/server';
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-cobalt';
@@ -21,20 +22,18 @@ function Editor() {
             script: code,
             stdin: 'TESTING',
         };
-        // try {
-        //   const res = await server.post('/code', data);
-        //   console.log(res.data);
-        // } catch (error) {
-        //   console.log(error);
-        // }
+        try {
+            const res = await server.post('/code', data);
+            console.log(res.data);
+            const string = res.data.output;
+            console.log(string.charCodeAt(5));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
-<<<<<<< HEAD
-        <div>
-=======
         <Box>
->>>>>>> ff58a0e33b96713551d8e090469e8f013d396de8
             <AceEditor
                 ref={codeRef}
                 mode="python"
@@ -51,13 +50,8 @@ function Editor() {
                     enableSnippets: true,
                 }}
             />
-<<<<<<< HEAD
-            <button onClick={submit}>Submit</button>
-        </div>
-=======
             <Button onClick={submit}>Submit</Button>
         </Box>
->>>>>>> ff58a0e33b96713551d8e090469e8f013d396de8
     );
 }
 

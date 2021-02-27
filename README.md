@@ -1,6 +1,6 @@
 # Sublit
+making submissions lit :fire: 
 
-## Content
 
 ## Client 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and can be swapped with next js if needed.

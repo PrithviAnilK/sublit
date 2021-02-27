@@ -3,7 +3,7 @@ import AceEditor from 'react-ace';
 import server from '../../utils/server';
 
 import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/theme-cobalt';
+import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import { Button, Box } from '@chakra-ui/react';
 
@@ -33,16 +33,17 @@ function Editor() {
     };
 
     return (
-        <Box>
+        <Box background="white">
             <AceEditor
                 ref={codeRef}
                 mode="python"
-                theme="cobalt"
+                theme="github"
                 onChange={onChange}
                 value={code}
                 name="UNIQUE_ID_OF_DIV"
-                height="50vh"
-                width="60vw"
+                height="55vh"
+                width="58vw"
+                fontSize={18}
                 editorProps={{ $blockScrolling: true }}
                 setOptions={{
                     enableBasicAutocompletion: true,

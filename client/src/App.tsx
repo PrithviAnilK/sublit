@@ -4,6 +4,8 @@ import { Route, Router } from 'react-router-dom';
 import Class from './pages/Class';
 import Landing from './pages/Landing';
 import './styles/app.css';
+import { StoreProvider } from 'easy-peasy';
+import store from './easy-peasy/store';
 import history from './utils/history';
 
 const theme = extendTheme({
@@ -19,12 +21,14 @@ const theme = extendTheme({
 
 const App = () => {
     return (
-        <ChakraProvider theme={theme}>
-            <Router history={history}>
-                <Route path="/" exact component={Landing} />
-                <Route path="/class/" component={Class} />
-            </Router>
-        </ChakraProvider>
+        <StoreProvider store={store}>
+            <ChakraProvider theme={theme}>
+                <Router history={history}>
+                    <Route path="/" exact component={Landing} />
+                    <Route path="/class/" component={Class} />
+                </Router>
+            </ChakraProvider>
+        </StoreProvider>
     );
 };
 

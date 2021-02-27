@@ -13,6 +13,20 @@ import React, { useState } from 'react';
 import VariableForm from './VariableForm';
 import history from '../../utils/history';
 import axios from '../../utils/axios';
+import { useStoreActions } from 'easy-peasy';
+
+const makeID = (length: number) => {
+    var result = '';
+    var characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+    }
+    return result;
+};
 
 const Form = () => {
     const [user, setUser] = useState<string>('');
@@ -23,19 +37,41 @@ const Form = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [disabled, setDisabled] = useState<boolean>(true);
     const buttonText = user === 'Teacher' ? 'Create Room' : 'Join Room';
+    const { logIn } = useStoreActions((actions: any) => actions.auth);
 
     const onSubmit = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.preventDefault();
         setIsLoading(true);
+
         if (user === 'Teacher') {
+            const userData = {
+                user,
+                details: {
+                    classCode: makeID(5),
+                    className,
+                    students: [],
+                },
+            };
             await axios.post('/assignment/', {
                 classCode: code,
                 className,
                 students: [],
             });
+            logIn(userData);
         } else {
+            const userData = {
+                user,
+                details: {
+                    name,
+                    srn,
+                    submitted: false,
+                    code: '',
+                    score: 0,
+                    classCode: code,
+                },
+            };
             await axios.post(`/student/${code}/`, {
                 name,
                 srn,
@@ -44,8 +80,8 @@ const Form = () => {
                 score: 0,
                 classCode: code,
             });
+            logIn(userData);
         }
-        console.log('yes');
         history.push(`/class/${code}/`);
     };
 

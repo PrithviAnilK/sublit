@@ -25,8 +25,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const { studentRouter } = routers;
+const { studentRouter, assignmentRouter } = routers;
 app.use('/student/', studentRouter);
+app.use('/assignment/', assignmentRouter);
 
 app.listen(PORT, () => {
     console.log(`Server Started on [dev: http://localhost:${PORT}] !`);

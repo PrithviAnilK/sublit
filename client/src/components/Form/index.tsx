@@ -7,12 +7,12 @@ import {
     HStack,
     Input,
     Radio,
-    RadioGroup,
+    RadioGroup
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import VariableForm from './VariableForm';
-import history from '../../utils/history';
 import { useStoreActions } from 'easy-peasy';
+import React, { useState } from 'react';
+import history from '../../utils/history';
+import VariableForm from './VariableForm';
 
 const makeID = (length: number) => {
     var result = '';
@@ -37,6 +37,8 @@ const Form = () => {
     const [disabled, setDisabled] = useState<boolean>(true);
     const buttonText = user === 'Teacher' ? 'Create Room' : 'Join Room';
     const { logIn } = useStoreActions((actions: any) => actions.auth);
+
+
 
     const onSubmit = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>

@@ -15,7 +15,8 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 import history from '../../utils/history';
 import TestCaseModal from './TestCase';
 
@@ -23,6 +24,7 @@ interface TeacherViewProps {
     classCode: string;
 }
 
+let socket;
 const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
     const [question, setQuestion] = useState<string>('');
     const [inputDesc, setInputDesc] = useState<string>('');
@@ -31,6 +33,7 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
         { input: string; output: string }[]
     >([]);
     const [isLoading, setLoading] = useState(false);
+    const ENDPOINT = 'http://localhost:5000/';
 
     const { addAssignment } = useStoreActions(
         (actions: any) => actions.assignment
@@ -56,6 +59,14 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
         setTestCases([...testCases, { input, output }]);
         onClose();
     };
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+        console.log('hehe');
+        socket.emit('yeye', () => {
+            console.log('yeye');
+        });
+    }, []);
 
     return (
         <Box

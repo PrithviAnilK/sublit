@@ -46,20 +46,17 @@ const Form = () => {
         setIsLoading(true);
 
         if (user === 'Teacher') {
+            const id = makeID(5);
             const userData = {
                 user,
                 details: {
-                    classCode: makeID(5),
+                    classCode: id,
                     className,
                     students: [],
                 },
             };
-            await axios.post('/assignment/', {
-                classCode: code,
-                className,
-                students: [],
-            });
             logIn(userData);
+            history.push(`/class/${id}/`);
         } else {
             const userData = {
                 user,
@@ -72,17 +69,9 @@ const Form = () => {
                     classCode: code,
                 },
             };
-            await axios.post(`/student/${code}/`, {
-                name,
-                srn,
-                submitted: false,
-                code: '',
-                score: 0,
-                classCode: code,
-            });
             logIn(userData);
+            history.push(`/class/${code}/`);
         }
-        history.push(`/class/${code}/`);
     };
 
     return (

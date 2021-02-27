@@ -1,11 +1,14 @@
 import { createStore } from 'easy-peasy';
-import { logIn } from './actions';
+import { addAssignment, logIn } from './actions';
 
 const initStore = {
     auth: {
         user: '-1',
         details: {},
     },
+    assignment: {
+        details: {}
+    }
 };
 
 export default createStore({
@@ -13,4 +16,8 @@ export default createStore({
         ...initStore.auth,
         logIn,
     },
+    assignment: {
+        ...initStore.assignment,
+        addAssignment
+    }
 });

@@ -5,9 +5,10 @@ import TeacherView from '../components/Teacher/TeacherView';
 
 interface ClassProps {}
 const Class: React.FC<ClassProps> = ({}) => {
-    const { user, details } = useStoreState(
-        (state: { auth: any }) => state.auth
-    );
+    const {
+        user,
+        details: { classCode },
+    } = useStoreState((state: { auth: any }) => state.auth);
     if (user === 'Teacher')
         return (
             <Box
@@ -17,7 +18,9 @@ const Class: React.FC<ClassProps> = ({}) => {
                 className="amin-gradient"
                 minH="100vh"
             >
-                <TeacherView />
+                <TeacherView
+                    classCode={classCode}
+                />
             </Box>
         );
     else return <>student</>;

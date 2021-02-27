@@ -7,6 +7,7 @@ import './styles/app.css';
 import { StoreProvider } from 'easy-peasy';
 import store from './easy-peasy/store';
 import history from './utils/history';
+import Submissions from './pages/Submissions';
 
 const theme = extendTheme({
     colors: {
@@ -26,6 +27,7 @@ const App = () => {
                 <Router history={history}>
                     <Route path="/" exact component={Landing} />
                     <Route path="/class/" component={Class} />
+                    <Route path="/submissions/" component={Submissions} />
                 </Router>
             </ChakraProvider>
         </StoreProvider>

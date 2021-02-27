@@ -8,7 +8,7 @@ import {
     addStudent,
     getAssignment,
     IAssignment,
-    IStudent
+    IStudent,
 } from './Assignment';
 import codeRouter from './routers/Code';
 const request = require('request');
@@ -29,7 +29,7 @@ const io = require('socket.io')(httpServer, {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/code',codeRouter)
+app.use('/code', codeRouter);
 
 io.on('connection', (socket: any) => {
     socket.on('join', (data: { classCode: string; user: string }) => {
@@ -42,16 +42,17 @@ io.on('connection', (socket: any) => {
         callback();
     });
 
-    socket.on('addStudent', (student: IStudent) => {
+    socket.on('addStudent', (student: IStudent, callback: any) => {
         socket.join(student.classCode);
         addStudent(student);
         const Assignment = getAssignment(student.classCode);
         socket.broadcast
             .to(student.classCode)
             .emit('updateSubmissions', Assignment?.students);
+        callback({ ...Assignment, students: undefined });
     });
 });
 
 httpServer.listen(PORT, () => {
-    console.log(`Server Started on [dev: http://localhost:${PORT}] !`)
+    console.log(`Server Started on [dev: http://localhost:${PORT}] !`);
 });

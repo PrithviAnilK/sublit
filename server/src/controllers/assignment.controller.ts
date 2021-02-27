@@ -23,9 +23,41 @@ export const createAssignment = async (req: Request, res: Response) => {
         classCode,
         className,
         students,
+        input: '',
+        output: '',
+        testCases: [],
     });
 
     newAssignment.save({}, (err: any, assignment: IAssignment) => {
+        if (err) {
+            res.json({
+                err,
+                message: 'Could not save file to mongodb.',
+            });
+        } else {
+            res.json({
+                err,
+                assignment,
+            });
+        }
+    });
+};
+
+export const addAssignmentDetails = async (req: Request, res: Response) => {
+    const { classCode } = req.params;
+    const { input, output, question, testCases } = req.body;
+
+    Assignment.findOneAndUpdate(
+        { classCode },
+        {
+            $set: {
+                input,
+                output,
+                question,
+                testCases,
+            },
+        }
+    ).exec((err: any, assignment: any) => {
         if (err) {
             res.json({
                 err,

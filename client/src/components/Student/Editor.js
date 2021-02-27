@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
-// import text from './competitions.txt'; // Relative path to your File
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-cobalt';
@@ -31,13 +30,6 @@ function Editor() {
 
     return (
         <div>
-            <div>
-                {/* <p>Given an array of integers, Find the subarray with maximum sum!!!</p>
-
-        <p>Max Points : {maxp}</p>
-        <p>Posted on : Sun Jan 24 2021 01:00:00 GMT+0530</p>
-        <p>Started : Sun Jan 24 2021 04:53:20 GMT+0530</p> */}
-            </div>
             <AceEditor
                 ref={codeRef}
                 mode="python"
@@ -55,7 +47,6 @@ function Editor() {
                 }}
             />
             <button onClick={submit}>Submit</button>
-            {/* <div>Gained Points:{scored}</div> */}
         </div>
     );
 }

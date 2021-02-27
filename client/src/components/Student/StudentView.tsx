@@ -60,7 +60,7 @@ const Student = () => {
                         />
                     </GridItem>
                     <GridItem colSpan={6} rowSpan={6}>
-                        <Editor />
+                        <Editor testCases={testCases}/>
                     </GridItem>
                     <GridItem colSpan={5} rowSpan={3} bg="tomato" />
                 </Grid>

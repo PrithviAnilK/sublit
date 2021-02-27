@@ -4,7 +4,13 @@ import express, { Application } from 'express';
 import router from './router';
 import http from 'http';
 const request = require('request');
-
+import {
+    addAssignment,
+    addStudent,
+    getAssignment,
+    IAssignment,
+    IStudent,
+} from './Assignment';
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
@@ -21,9 +27,23 @@ app.use(router);
 app.use(cors());
 
 io.on('connection', (socket: any) => {
-    socket.on('yeye', (callback: any) => {
-        console.log('yeye');
+    socket.on('join', (data: { classCode: string; user: string }) => {
+        socket.join(data.classCode);
+        console.log('user joined class', data.classCode);
+    });
+
+    socket.on('addAssignment', (assignment: IAssignment, callback: any) => {
+        addAssignment(assignment);
         callback();
+    });
+
+    socket.on('addStudent', (student: IStudent) => {
+        socket.join(student.classCode);
+        addStudent(student);
+        const Assignment = getAssignment(student.classCode);
+        socket.broadcast
+            .to(student.classCode)
+            .emit('updateSubmissions', Assignment?.students);
     });
 });
 

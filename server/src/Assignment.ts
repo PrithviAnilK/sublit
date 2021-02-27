@@ -1,37 +1,37 @@
-interface IAssignment {
+export interface IAssignment {
     className: string;
-    classCode: string;
-    question?: string;
-    inputDesc?: string;
-    outputDesc?: string;
-    testCases?: { input: string; output: string }[];
-}
-
-let Assignments: IAssignment[] = [];
-
-const createAssignment = (className: string, classCode: string) => {
-    Assignments.push({ className, classCode });
-};
-
-const addQuestion = (data: {
     classCode: string;
     question: string;
     inputDesc: string;
     outputDesc: string;
     testCases: { input: string; output: string }[];
-}) => {
-    const { inputDesc, outputDesc, question, testCases, classCode } = data;
-    Assignments = Assignments.map((ass) => {
-        if (ass.classCode === classCode) {
-            return {
-                ...ass,
-                inputDesc,
-                outputDesc,
-                question,
-                testCases,
-            };
-        } else {
-            return ass;
-        }
-    });
+    students: IStudent[];
+}
+
+export interface IStudent {
+    name: string;
+    srn: string;
+    submitted: boolean;
+    code: string;
+    score: number;
+    classCode: string;
+}
+
+let Assignments: IAssignment[] = [];
+
+export const addAssignment = (assignment: IAssignment) => {
+    Assignments.push(assignment);
 };
+
+export const addStudent = (student: IStudent) => {
+    Assignments = Assignments.map((assignment) =>
+        assignment.classCode === student.classCode
+            ? { ...assignment, students: [...assignment.students, student] }
+            : assignment
+    );
+};
+
+export const getAssignment = (classCode: string) =>
+    Assignments.find((ass) => ass.classCode === classCode);
+
+export const getAssignments = () => Assignments;

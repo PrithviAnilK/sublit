@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-cobalt';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import { Button, Box } from '@chakra-ui/react';
 
 function Editor() {
     const [code, setCode] = useState('');
@@ -29,7 +30,11 @@ function Editor() {
     };
 
     return (
+<<<<<<< HEAD
         <div>
+=======
+        <Box>
+>>>>>>> ff58a0e33b96713551d8e090469e8f013d396de8
             <AceEditor
                 ref={codeRef}
                 mode="python"
@@ -46,8 +51,13 @@ function Editor() {
                     enableSnippets: true,
                 }}
             />
+<<<<<<< HEAD
             <button onClick={submit}>Submit</button>
         </div>
+=======
+            <Button onClick={submit}>Submit</Button>
+        </Box>
+>>>>>>> ff58a0e33b96713551d8e090469e8f013d396de8
     );
 }
 

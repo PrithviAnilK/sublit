@@ -1,8 +1,10 @@
 import React from 'react';
 import { Stack, Box, Heading, Text } from '@chakra-ui/react';
-function Questions() {
+
+
+const Questions = () => {
     return (
-        <div>
+        <Box>
             <Stack>
                 <Box p={5} shadow="md" borderWidth="1px">
                     <Heading fontSize="xl">Add Two Numbers</Heading>
@@ -38,8 +40,8 @@ function Questions() {
                     <Text mt={4}>Output 3 300 50</Text>
                 </Box>
             </Stack>
-        </div>
+        </Box>
     );
-}
+};
 
 export default Questions;

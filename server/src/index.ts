@@ -9,7 +9,7 @@ const request = require('request')
 dotenv.config();
 
 const app: Application = express();
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 4000
 
 // const mongoURL = process.env.PORT
 //     ? `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.msilm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`

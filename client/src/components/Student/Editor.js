@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import { Button, Box } from '@chakra-ui/react';
 
-function Editor() {
+function Editor({ testCases }) {
     const [code, setCode] = useState('');
     const codeRef = useRef('');
 
@@ -16,20 +16,22 @@ function Editor() {
     };
     const submit = async () => {
         // setCode(codeRef.current.value);
+        var outputs = [];
         console.log(code);
-        const data = {
-            language: 'python3',
-            script: code,
-            // stdin: '3↵1 2↵100 200↵10 40',
-            stdin: '3 4',
-        };
-        try {
-            const res = await server.post('/code', data);
-            console.log(res.data);
-            const string = res.data.output;
-            console.log(string.charCodeAt(5));
-        } catch (error) {
-            console.log(error);
+        for (const key of Object.keys(testCases)) {
+            const data = {
+                language: 'python3',
+                script: code,
+                stdin: testCases[key].input,
+            };
+            try {
+                const {
+                    data: { output },
+                } = await server.post('/code', data);
+                outputs.push(output.substring(0, output.length - 1));
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 

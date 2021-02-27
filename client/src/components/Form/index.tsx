@@ -12,7 +12,6 @@ import {
 import React, { useState } from 'react';
 import VariableForm from './VariableForm';
 import history from '../../utils/history';
-import axios from '../../utils/axios';
 import { useStoreActions } from 'easy-peasy';
 
 const makeID = (length: number) => {

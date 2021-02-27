@@ -1,16 +1,17 @@
+import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import {
     Box,
     Heading,
     Table,
-    TableCaption,
     Tbody,
     Td,
     Th,
     Thead,
     Tr,
 } from '@chakra-ui/react';
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
-import React, { useState } from 'react';
+import { useStoreState } from 'easy-peasy';
+import React, { useState, useEffect } from 'react';
+import { io, Socket } from 'socket.io-client';
 
 interface SubmissionsViewProps {}
 
@@ -22,16 +23,25 @@ interface ISubmission {
     code: string;
 }
 
+let socket: Socket;
 const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
-    const [submissions, setSubmissions] = useState<ISubmission[]>([
-        {
-            submitted: true,
-            name: 'Prithvi Anil',
-            srn: 'PES1201900054',
-            score: 10,
-            code: '',
-        },
-    ]);
+    const {
+        details: { classCode },
+    } = useStoreState((store: any) => store.auth);
+    const ENDPOINT = 'http://localhost:5000/';
+    const [submissions, setSubmissions] = useState<ISubmission[]>([]);
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+        socket.emit('join', { user: 'Teacher', classCode });
+    }, [ENDPOINT]);
+
+    useEffect(() => {
+        socket.on('updateSubmissions', (students: ISubmission[]) => {
+            setSubmissions(students);
+        });
+    }, []);
+
     return (
         <Box
             borderRadius="lg"
@@ -47,7 +57,9 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
                 <Thead>
                     <Tr>
                         <Th>Name</Th>
-                        <Th display={{ lg: 'table-cell', base: 'none' }}>SRN</Th>
+                        <Th display={{ lg: 'table-cell', base: 'none' }}>
+                            SRN
+                        </Th>
                         <Th>Score</Th>
                         <Th display={{ lg: 'table-cell', base: 'none' }}>
                             Submitted

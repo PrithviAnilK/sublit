@@ -16,16 +16,22 @@ import {
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import history from '../../utils/history';
 import TestCaseModal from './TestCase';
 
 interface TeacherViewProps {
     classCode: string;
+    className: string;
+    students: [];
 }
 
-let socket;
-const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
+let socket: Socket;
+const TeacherView: React.FC<TeacherViewProps> = ({
+    classCode,
+    className,
+    students,
+}) => {
     const [question, setQuestion] = useState<string>('');
     const [inputDesc, setInputDesc] = useState<string>('');
     const [outputDesc, setOutputDesc] = useState<string>('');
@@ -33,11 +39,18 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
         { input: string; output: string }[]
     >([]);
     const [isLoading, setLoading] = useState(false);
-    const ENDPOINT = 'http://localhost:5000/';
 
     const { addAssignment } = useStoreActions(
         (actions: any) => actions.assignment
     );
+
+    useEffect(() => {
+        const ENDPOINT = 'http://localhost:5000/';
+        socket = io(ENDPOINT);
+        return () => {
+            socket.off();
+        };
+    }, []);
 
     const onSubmit = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -50,7 +63,21 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
             outputDesc,
             testCases,
         });
-        history.push(`/submissions/${classCode}`);
+        socket.emit(
+            'addAssignment',
+            {
+                classCode,
+                className,
+                students,
+                question,
+                inputDesc,
+                outputDesc,
+                testCases,
+            },
+            () => {
+                history.push(`/submissions/${classCode}`);
+            }
+        );
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,14 +86,6 @@ const TeacherView: React.FC<TeacherViewProps> = ({ classCode }) => {
         setTestCases([...testCases, { input, output }]);
         onClose();
     };
-
-    useEffect(() => {
-        socket = io(ENDPOINT);
-        console.log('hehe');
-        socket.emit('yeye', () => {
-            console.log('yeye');
-        });
-    }, []);
 
     return (
         <Box

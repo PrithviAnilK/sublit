@@ -1,9 +1,20 @@
-import React from 'react';
 import { Grid, Box, GridItem } from '@chakra-ui/react';
 import Editor from './Editor';
 import Questions from './Questions';
+import { io, Socket } from 'socket.io-client';
 
+import React, { useEffect } from 'react';
+import { useStoreState } from 'easy-peasy';
+
+let socket: Socket;
 const Student = () => {
+    const { details } = useStoreState((store: any) => store.auth);
+    useEffect(() => {
+        const ENDPOINT = 'http://localhost:5000/';
+        socket = io(ENDPOINT);
+        socket.emit('addStudent', details);
+    }, []);
+
     return (
         <Box className='amin-gradient'>
             <Box padding="10px">

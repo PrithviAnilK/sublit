@@ -8,7 +8,7 @@ interface ClassProps {}
 const Class: React.FC<ClassProps> = ({}) => {
     const {
         user,
-        details: { classCode },
+        details: { classCode, className, students },
     } = useStoreState((state: { auth: any }) => state.auth);
     if (user === 'Teacher')
         return (
@@ -19,7 +19,11 @@ const Class: React.FC<ClassProps> = ({}) => {
                 className="amin-gradient"
                 minH="100vh"
             >
-                <TeacherView classCode={classCode} />
+                <TeacherView
+                    classCode={classCode}
+                    className={className}
+                    students={students}
+                />
             </Box>
         );
     else return <Student />;

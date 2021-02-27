@@ -10,6 +10,7 @@ import {
     Tbody,
     Td,
     Th,
+    Textarea,
     Thead,
     Tr,
     useDisclosure,
@@ -33,6 +34,7 @@ const TeacherView: React.FC<TeacherViewProps> = ({
     students,
 }) => {
     const [question, setQuestion] = useState<string>('');
+    const [desc, setDesc] = useState<string>('');
     const [inputDesc, setInputDesc] = useState<string>('');
     const [outputDesc, setOutputDesc] = useState<string>('');
     const [testCases, setTestCases] = useState<
@@ -70,6 +72,7 @@ const TeacherView: React.FC<TeacherViewProps> = ({
                 className,
                 students,
                 question,
+                desc,
                 inputDesc,
                 outputDesc,
                 testCases,
@@ -107,6 +110,15 @@ const TeacherView: React.FC<TeacherViewProps> = ({
                         placeholder="Write a C Program to find the fibonacci sequence."
                         type="text"
                         borderColor="#ced4da"
+                    />
+                </FormControl>
+                <FormControl id="desc">
+                    <FormLabel fontSize="lg">Description</FormLabel>
+                    <Textarea
+                        borderColor="#ced4da"
+                        placeholder="The ith element of the fibonacci sequence is defined by, f[i] = f[i - 1] + f[i - 2]"
+                        value={desc}
+                        onChange={(e) => setDesc(e.target.value)}
                     />
                 </FormControl>
                 <FormControl id="input" my="2">

@@ -20,7 +20,8 @@ function Editor() {
         const data = {
             language: 'python3',
             script: code,
-            stdin: 'TESTING',
+            // stdin: '3↵1 2↵100 200↵10 40',
+            stdin: '3 4',
         };
         try {
             const res = await server.post('/code', data);

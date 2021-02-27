@@ -36,8 +36,8 @@ const Questions = () => {
                 </Box>
                 <Box p={5} shadow="md" borderWidth="1px" background="white"borderRadius="lg">
                     <Heading fontSize="l">Example</Heading>
-                    <Text mt={4}>Input 3 1 2 100 200 10 40</Text>
-                    <Text mt={4}>Output 3 300 50</Text>
+                    <Text mt={4}>Input<br/> 3 <br/> 1 2 <br/>100 200 <br/>10 40</Text>
+                    <Text mt={4}>Output<br/> 3 <br/>300<br/> 50</Text>
                 </Box>
             </Stack>
         </Box>

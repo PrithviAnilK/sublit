@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Heading, Input, Divider } from '@chakra-ui/react';
 import { useStoreState } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
@@ -17,6 +17,8 @@ const Student = () => {
     const [testCases, setTestCases] = useState<
         { input: string; output: string }[]
     >([{ input: '', output: '' }]);
+    const [testInput, setTestInput] = useState<string>('');
+    const [testOutput, setTestOutput] = useState<string>('');
 
     useEffect(() => {
         const ENDPOINT = 'http://localhost:5000/';
@@ -30,7 +32,6 @@ const Student = () => {
                 outputDesc,
                 testCases,
             } = assignment;
-            console.log(desc);
             setQuestion(question);
             setDesc(desc);
             setClassName(className);
@@ -44,6 +45,7 @@ const Student = () => {
         <Box className="amin-gradient">
             <Box padding="10px">
                 <Grid
+                    p="5"
                     h="100vh"
                     templateRows="repeat(10, 1fr)"
                     templateColumns="repeat(10, 1fr)"
@@ -60,10 +62,39 @@ const Student = () => {
                         />
                     </GridItem>
                     <GridItem colSpan={6} rowSpan={6}>
-                        <Editor testCases={testCases}/>
+                        <Editor
+                            testInput={testInput}
+                            setTestOutput={setTestOutput}
+                            testCases={testCases}
+                        />
                     </GridItem>
-                    <GridItem colSpan={5} rowSpan={3} padding='3' bg="white" borderRadius='lg' >
-                        <Heading>Output</Heading>
+                    <GridItem
+                        rowSpan={3}
+                        colSpan={5}
+                        padding="5"
+                        bg="white"
+                        borderRadius="lg"
+                    >
+                        <Box>
+                            <Heading size="lg">Test your input</Heading>
+                            <Divider color="#ced4da" my="2" />
+                            <Heading my="2" fontSize="md">
+                                Input
+                            </Heading>
+                            <Input
+                                value={testInput}
+                                onChange={(e) => setTestInput(e.target.value)}
+                                borderColor="#ced4da"
+                            />
+                            <Heading my="2" fontSize="md">
+                                Output
+                            </Heading>
+                            <Input
+                                value={testOutput}
+                                readOnly
+                                borderColor="#ced4da"
+                            />
+                        </Box>
                     </GridItem>
                 </Grid>
             </Box>

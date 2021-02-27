@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express, { Application } from 'express';
 import router from './router';
 import http from 'http';
+const request = require('request');
 
 dotenv.config();
 
@@ -24,6 +25,25 @@ io.on('connection', (socket: any) => {
         console.log('yeye');
         callback();
     });
+});
+
+app.post('/code', (req, res) => {
+    const data = {
+        ...req.body,
+        clientId: 'ea736c0edffc53ecad54581e3a22e27b',
+        clientSecret:
+            '10f9b9f228599f46347319df937b48e11eeb11114a376f51234beda05c4e6cd6',
+    };
+    request(
+        {
+            url: 'https://api.jdoodle.com/v1/execute',
+            method: 'POST',
+            json: data,
+        },
+        function (err: any, response: any, body: any) {
+            res.send(body);
+        }
+    );
 });
 
 httpServer.listen(PORT, () => {

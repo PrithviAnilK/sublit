@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Box, GridItem } from '@chakra-ui/react';
-import Editor from '../components/Student/Editor';
-import Questions from '../components/Student/Questions';
+import Editor from './Editor';
+import Questions from './Questions';
 
-function Student() {
+const Student = () => {
     return (
-        <div>
+        <Box>
             <Box padding="10px">
                 <Grid
                     h="100vh"
@@ -22,8 +22,8 @@ function Student() {
                     <GridItem colSpan={6} rowSpan={4} bg="tomato" />
                 </Grid>
             </Box>
-        </div>
+        </Box>
     );
-}
+};
 
 export default Student;

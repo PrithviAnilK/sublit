@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { useStoreState } from 'easy-peasy';
 import React from 'react';
 import TeacherView from '../components/Teacher/TeacherView';
-import Student from './Student';
+import Student from '../components/Student/StudentView';
 
 interface ClassProps {}
 const Class: React.FC<ClassProps> = ({}) => {
@@ -19,12 +19,10 @@ const Class: React.FC<ClassProps> = ({}) => {
                 className="amin-gradient"
                 minH="100vh"
             >
-                <TeacherView
-                    classCode={classCode}
-                />
+                <TeacherView classCode={classCode} />
             </Box>
         );
-    else return <><Student/></>;
+    else return <Student />;
 };
 
 export default Class;

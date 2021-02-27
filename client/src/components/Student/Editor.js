@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
-// import text from './competitions.txt'; // Relative path to your File
 
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-cobalt';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import { Button, Box } from '@chakra-ui/react';
 
 function Editor() {
     const [code, setCode] = useState('');
@@ -30,14 +30,7 @@ function Editor() {
     };
 
     return (
-        <div>
-            <div>
-                {/* <p>Given an array of integers, Find the subarray with maximum sum!!!</p>
-
-        <p>Max Points : {maxp}</p>
-        <p>Posted on : Sun Jan 24 2021 01:00:00 GMT+0530</p>
-        <p>Started : Sun Jan 24 2021 04:53:20 GMT+0530</p> */}
-            </div>
+        <Box>
             <AceEditor
                 ref={codeRef}
                 mode="python"
@@ -54,9 +47,8 @@ function Editor() {
                     enableSnippets: true,
                 }}
             />
-            <button onClick={submit}>Submit</button>
-            {/* <div>Gained Points:{scored}</div> */}
-        </div>
+            <Button onClick={submit}>Submit</Button>
+        </Box>
     );
 }
 

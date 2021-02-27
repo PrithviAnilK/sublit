@@ -44,7 +44,6 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
         >
             <Heading>Submissions</Heading>
             <Table variant="striped" colorScheme="purple" p="5">
-                <TableCaption>Testcases to give your students</TableCaption>
                 <Thead>
                     <Tr>
                         <Th>Name</Th>

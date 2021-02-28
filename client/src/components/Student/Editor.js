@@ -2,6 +2,7 @@ import { Box, Button } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 import AceEditor from 'react-ace';
 import server from '../../utils/server';
+import history from '../../utils/history';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-python';
@@ -42,6 +43,8 @@ const Editor = ({ testCases, testInput, setTestOutput }) => {
         setSubmitLoading(false);
         console.log(outputs);
         console.log(score(outputs, testCases));
+
+        history.push('/submitted');
     };
 
     const test = async () => {

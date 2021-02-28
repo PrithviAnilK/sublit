@@ -14,6 +14,7 @@ import {
     Portal,
     PopoverCloseButton,
 } from '@chakra-ui/react';
+import history from '../../utils/history';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-python';
@@ -78,6 +79,8 @@ const Editor = ({
             },
             () => {
                 setSubmitLoading(false);
+                      history.push('/submitted');
+
             }
         );
     };

@@ -51,7 +51,7 @@ const Editor = ({
         socket = io(ENDPOINT);
     }, [ENDPOINT]);
 
-    const submit = async () => {
+    const onSubmit = async () => {
         setSubmitLoading(true);
         var outputs = [];
         for (const key of Object.keys(testCases)) {
@@ -79,13 +79,12 @@ const Editor = ({
             },
             () => {
                 setSubmitLoading(false);
-                      history.push('/submitted');
-
+                history.push('/submitted');
             }
         );
     };
 
-    const test = async () => {
+    const onTest = async () => {
         setTestLoading(true);
         const data = {
             language: 'python3',
@@ -133,7 +132,7 @@ const Editor = ({
                         bgGradient: 'linear(to-r,#8e2de2, #4a00e0)',
                     }}
                     isLoading={testIsLoading}
-                    onClick={test}
+                    onClick={onTest}
                 >
                     Test
                 </Button>
@@ -149,7 +148,6 @@ const Editor = ({
                                 bg: '#8e2de2',
                                 bgGradient: 'linear(to-r,#8e2de2, #4a00e0)',
                             }}
-                            isLoading={submitIsLoading}
                         >
                             Submit
                         </Button>
@@ -172,7 +170,8 @@ const Editor = ({
                                         bgGradient:
                                             'linear(to-r,#8e2de2, #4a00e0)',
                                     }}
-                                    onClick={submit}
+                                    isLoading={submitIsLoading}
+                                    onClick={onSubmit}
                                 >
                                     Yes
                                 </Button>

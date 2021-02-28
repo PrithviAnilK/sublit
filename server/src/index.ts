@@ -9,6 +9,7 @@ import {
     getAssignment,
     IAssignment,
     IStudent,
+    submitStudent,
 } from './Assignment';
 import codeRouter from './routers/Code';
 const request = require('request');
@@ -50,6 +51,14 @@ io.on('connection', (socket: any) => {
             .to(student.classCode)
             .emit('updateSubmissions', Assignment?.students);
         callback({ ...Assignment, students: undefined });
+    });
+
+    socket.on('submit', (student: IStudent, callback: any) => {
+        // @ts-ignore
+        console.log(student);
+        const students = submitStudent(student);
+        socket.broadcast.to(student.classCode).emit('onSubmit', students);
+        callback();
     });
 });
 

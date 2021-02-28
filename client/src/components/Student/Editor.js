@@ -1,7 +1,19 @@
-import { Box, Button } from '@chakra-ui/react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
+import { io } from 'socket.io-client';
 import server from '../../utils/server';
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    Button,
+    Box,
+    PopoverArrow,
+    Portal,
+    PopoverCloseButton,
+} from '@chakra-ui/react';
 import history from '../../utils/history';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
@@ -16,11 +28,28 @@ const score = (outputs, testCases) => {
     return correctVal;
 };
 
-const Editor = ({ testCases, testInput, setTestOutput }) => {
+let socket;
+const Editor = ({
+    testCases,
+    testInput,
+    details,
+    setTestOutput,
+    desc,
+    className,
+    question,
+    outputDesc,
+    classCode,
+    inputDesc,
+}) => {
     const [code, setCode] = useState('');
     const codeRef = useRef('');
     const [testIsLoading, setTestLoading] = useState(false);
     const [submitIsLoading, setSubmitLoading] = useState(false);
+    const ENDPOINT = 'http://localhost:5000/';
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+    }, [ENDPOINT]);
 
     const submit = async () => {
         setSubmitLoading(true);
@@ -40,11 +69,20 @@ const Editor = ({ testCases, testInput, setTestOutput }) => {
                 console.log(error);
             }
         }
-        setSubmitLoading(false);
-        console.log(outputs);
-        console.log(score(outputs, testCases));
+        const scoreVal = score(outputs, testCases);
+        socket.emit(
+            'submit',
+            {
+                ...details,
+                submitted: true,
+                score: scoreVal,
+            },
+            () => {
+                setSubmitLoading(false);
+                      history.push('/submitted');
 
-        history.push('/submitted');
+            }
+        );
     };
 
     const test = async () => {
@@ -99,21 +137,49 @@ const Editor = ({ testCases, testInput, setTestOutput }) => {
                 >
                     Test
                 </Button>
-                <Button
-                    mx="2"
-                    size="sm"
-                    color="#ffffff"
-                    bg="#8e2de2"
-                    bgGradient="linear(to-r,#8e2de2, #4a00e0)"
-                    _hover={{
-                        bg: '#8e2de2',
-                        bgGradient: 'linear(to-r,#8e2de2, #4a00e0)',
-                    }}
-                    isLoading={submitIsLoading}
-                    onClick={submit}
-                >
-                    Submit
-                </Button>
+                <Popover>
+                    <PopoverTrigger>
+                        <Button
+                            mx="2"
+                            size="sm"
+                            color="#ffffff"
+                            bg="#8e2de2"
+                            bgGradient="linear(to-r,#8e2de2, #4a00e0)"
+                            _hover={{
+                                bg: '#8e2de2',
+                                bgGradient: 'linear(to-r,#8e2de2, #4a00e0)',
+                            }}
+                            isLoading={submitIsLoading}
+                        >
+                            Submit
+                        </Button>
+                    </PopoverTrigger>
+                    <Portal>
+                        <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>
+                                Are you sure you want to submit?
+                            </PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                                <Button
+                                    size="sm"
+                                    color="#ffffff"
+                                    bg="#8e2de2"
+                                    bgGradient="linear(to-r,#8e2de2, #4a00e0)"
+                                    _hover={{
+                                        bg: '#8e2de2',
+                                        bgGradient:
+                                            'linear(to-r,#8e2de2, #4a00e0)',
+                                    }}
+                                    onClick={submit}
+                                >
+                                    Yes
+                                </Button>
+                            </PopoverBody>
+                        </PopoverContent>
+                    </Portal>
+                </Popover>
             </Box>
         </Box>
     );

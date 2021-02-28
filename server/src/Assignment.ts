@@ -35,4 +35,14 @@ export const addStudent = (student: IStudent) => {
 export const getAssignment = (classCode: string) =>
     Assignments.find((ass) => ass.classCode === classCode);
 
+export const submitStudent = (student: IStudent) => {
+    let assignment = getAssignment(student.classCode);
+    if (assignment?.students) {
+        assignment.students = assignment.students.map((st) =>
+            st.srn === student.srn ? student : st
+        );
+    }
+    return assignment?.students;
+};
+
 export const getAssignments = () => Assignments;

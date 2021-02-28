@@ -34,11 +34,10 @@ const TestCaseModal: React.FC<ModalProps> = ({
                     <ModalHeader>Add a test case</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <FormControl id="question">
-                            <FormLabel fontSize="lg">Question</FormLabel>
+                        <FormControl id="testcase-input">
+                            <FormLabel fontSize="lg">Testcase Input</FormLabel>
                             <Textarea
                                 borderColor="#ced4da"
-                                placeholder="Here is a sample placeholder"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                             />
@@ -47,7 +46,6 @@ const TestCaseModal: React.FC<ModalProps> = ({
                             <FormLabel fontSize="lg">Expected Output</FormLabel>
                             <Textarea
                                 borderColor="#ced4da"
-                                placeholder="Here is a sample placeholder"
                                 value={output}
                                 onChange={(e) => setOutput(e.target.value)}
                             />

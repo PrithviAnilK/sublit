@@ -31,7 +31,7 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
     } = useStoreState((store: any) => store.auth);
     const ENDPOINT = 'http://localhost:5000/';
     const [submissions, setSubmissions] = useState<ISubmission[]>([]);
-
+    
     useEffect(() => {
         socket = io(ENDPOINT);
         socket.emit('join', { user: 'Teacher', classCode });
@@ -39,6 +39,14 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
 
     useEffect(() => {
         socket.on('updateSubmissions', (students: ISubmission[]) => {
+            setSubmissions(students);
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('onSubmit', (students: ISubmission[]) => {
+            console.log('onSubmit');
+            console.log(students);
             setSubmissions(students);
         });
     }, []);

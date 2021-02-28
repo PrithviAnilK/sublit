@@ -18,6 +18,7 @@ const Student = () => {
         { input: string; output: string }[]
     >([{ input: '', output: '' }]);
     const [testInput, setTestInput] = useState<string>('');
+    const [classCode, setClassCode] = useState<string>('');
     const [testOutput, setTestOutput] = useState<string>('');
 
     useEffect(() => {
@@ -31,9 +32,11 @@ const Student = () => {
                 question,
                 outputDesc,
                 testCases,
+                classCode,
             } = assignment;
             setQuestion(question);
             setDesc(desc);
+            setClassCode(classCode);
             setClassName(className);
             setInputDesc(inputDesc);
             setOutputDesc(outputDesc);
@@ -63,9 +66,16 @@ const Student = () => {
                     </GridItem>
                     <GridItem colSpan={6} rowSpan={6}>
                         <Editor
+                            details={details}
+                            classCode={classCode}
                             testInput={testInput}
                             setTestOutput={setTestOutput}
                             testCases={testCases}
+                            desc={desc}
+                            className={className}
+                            question={question}
+                            outputDesc={outputDesc}
+                            inputDesc={inputDesc}
                         />
                     </GridItem>
                     <GridItem

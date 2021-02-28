@@ -12,7 +12,6 @@ import {
     submitStudent,
 } from './Assignment';
 import codeRouter from './routers/Code';
-const request = require('request');
 
 dotenv.config();
 
@@ -54,8 +53,6 @@ io.on('connection', (socket: any) => {
     });
 
     socket.on('submit', (student: IStudent, callback: any) => {
-        // @ts-ignore
-        console.log(student);
         const students = submitStudent(student);
         socket.broadcast.to(student.classCode).emit('onSubmit', students);
         callback();

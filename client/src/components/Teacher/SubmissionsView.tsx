@@ -12,6 +12,7 @@ import {
 import { useStoreState } from 'easy-peasy';
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { BASEURL } from '../../utils/config';
 import Copy from './Copy';
 
 interface SubmissionsViewProps {}
@@ -29,13 +30,12 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
     const {
         details: { classCode },
     } = useStoreState((store: any) => store.auth);
-    const ENDPOINT = 'http://localhost:5000/';
     const [submissions, setSubmissions] = useState<ISubmission[]>([]);
     
     useEffect(() => {
-        socket = io(ENDPOINT);
+        socket = io(BASEURL);
         socket.emit('join', { user: 'Teacher', classCode });
-    }, [ENDPOINT]);
+    }, [BASEURL]);
 
     useEffect(() => {
         socket.on('updateSubmissions', (students: ISubmission[]) => {
@@ -45,8 +45,6 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
 
     useEffect(() => {
         socket.on('onSubmit', (students: ISubmission[]) => {
-            console.log('onSubmit');
-            console.log(students);
             setSubmissions(students);
         });
     }, []);

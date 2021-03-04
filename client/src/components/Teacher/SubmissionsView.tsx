@@ -31,7 +31,7 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
         details: { classCode },
     } = useStoreState((store: any) => store.auth);
     const [submissions, setSubmissions] = useState<ISubmission[]>([]);
-    
+
     useEffect(() => {
         socket = io(BASEURL);
         socket.emit('join', { user: 'Teacher', classCode });

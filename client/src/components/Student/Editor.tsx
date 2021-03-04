@@ -91,16 +91,15 @@ const Editor: FC<EditorProps> = ({
 
     const onTest = async () => {
         setTestLoading(true);
-        const data = {
+        const config = {
             language: 'python3',
             script: code,
             stdin: testInput,
         };
         try {
-            const {
-                data: { output },
-            } = await axios.post('/code', data);
-            setTestOutput(output.substring(0, output.length - 1));
+            const { data } = await axios.post('/code', config);
+            console.log(data);
+            setTestOutput(data.output.substring(0, data.output.length - 1));
         } catch (error) {
             console.log(error);
         }

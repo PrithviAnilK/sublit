@@ -5,7 +5,6 @@ import Form from '../components/Form';
 interface LandingProps {}
 
 const Landing: React.FC<LandingProps> = ({}) => {
-    console.log(process.env);
     return (
         <Box
             display="flex"

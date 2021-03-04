@@ -18,6 +18,7 @@ import {
 import { useStoreActions } from 'easy-peasy';
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { BASEURL } from '../../utils/config';
 import history from '../../utils/history';
 import TestCaseModal from './TestCase';
 
@@ -47,8 +48,7 @@ const TeacherView: React.FC<TeacherViewProps> = ({
     );
 
     useEffect(() => {
-        const ENDPOINT = 'http://localhost:5000/';
-        socket = io(ENDPOINT);
+        socket = io(BASEURL);
         return () => {
             socket.off();
         };

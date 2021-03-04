@@ -2,9 +2,7 @@ import { Box } from '@chakra-ui/react';
 import React from 'react';
 import SubmissionsView from '../components/Teacher/SubmissionsView';
 
-interface SubmissionsProps {}
-
-const Submissions: React.FC<SubmissionsProps> = ({}) => {
+const Submissions = () => {
     return (
         <Box
             display="flex"

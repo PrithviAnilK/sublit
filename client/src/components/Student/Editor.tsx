@@ -53,7 +53,7 @@ const Editor: FC<EditorProps> = ({
 
     useEffect(() => {
         socket = io(BASEURL);
-    }, [BASEURL]);
+    }, []);
 
     const onSubmit = async () => {
         setSubmitLoading(true);

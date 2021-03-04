@@ -4,9 +4,7 @@ import React from 'react';
 import TeacherView from '../components/Teacher/TeacherView';
 import Student from '../components/Student/StudentView';
 
-interface ClassProps {}
-
-const Class: React.FC<ClassProps> = ({}) => {
+const Class = () => {
     const {
         user,
         details: { classCode, className, students },

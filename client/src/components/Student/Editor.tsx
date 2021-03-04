@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, FC } from 'react';
 import AceEditor from 'react-ace';
-import { io } from 'socket.io-client';
-import server from '../../utils/server';
+import { io, Socket } from 'socket.io-client';
+import axios from '../../utils/axios';
 import {
     Popover,
     PopoverTrigger,
@@ -19,37 +19,41 @@ import history from '../../utils/history';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-github';
+import { BASEURL } from '../../utils/config';
 
-const score = (outputs, testCases) => {
+const score = (
+    outputs: string[],
+    testCases: { input: string; output: string }[]
+) => {
     var correctVal = 0;
     for (var i in outputs) {
-        correctVal += outputs[i] === testCases[i].output;
+        correctVal += Number(outputs[i] === testCases[i].output);
     }
     return correctVal;
 };
 
-let socket;
-const Editor = ({
+interface EditorProps {
+    details: any;
+    testInput: string;
+    setTestOutput: (s: string) => void;
+    testCases: { input: string; output: string }[];
+}
+
+let socket: Socket;
+const Editor: FC<EditorProps> = ({
     testCases,
     testInput,
     details,
     setTestOutput,
-    desc,
-    className,
-    question,
-    outputDesc,
-    classCode,
-    inputDesc,
 }) => {
     const [code, setCode] = useState('');
-    const codeRef = useRef('');
-    const [testIsLoading, setTestLoading] = useState(false);
-    const [submitIsLoading, setSubmitLoading] = useState(false);
-    const ENDPOINT = 'http://localhost:5000/';
+    const codeRef = useRef(null);
+    const [testIsLoading, setTestLoading] = useState<boolean>(false);
+    const [submitIsLoading, setSubmitLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        socket = io(ENDPOINT);
-    }, [ENDPOINT]);
+        socket = io(BASEURL);
+    }, [BASEURL]);
 
     const onSubmit = async () => {
         setSubmitLoading(true);
@@ -58,12 +62,13 @@ const Editor = ({
             const data = {
                 language: 'python3',
                 script: code,
+                // @ts-ignore
                 stdin: testCases[key].input,
             };
             try {
                 const {
                     data: { output },
-                } = await server.post('/code', data);
+                } = await axios.post('/code', data);
                 outputs.push(output.substring(0, output.length - 1));
             } catch (error) {
                 console.log(error);
@@ -86,16 +91,15 @@ const Editor = ({
 
     const onTest = async () => {
         setTestLoading(true);
-        const data = {
+        const config = {
             language: 'python3',
             script: code,
             stdin: testInput,
         };
         try {
-            const {
-                data: { output },
-            } = await server.post('/code', data);
-            setTestOutput(output.substring(0, output.length - 1));
+            const { data } = await axios.post('/code', config);
+            console.log(data);
+            setTestOutput(data.output.substring(0, data.output.length - 1));
         } catch (error) {
             console.log(error);
         }

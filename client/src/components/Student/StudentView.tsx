@@ -3,6 +3,7 @@ import { useStoreState } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { IAssignment } from '../../interfaces';
+import { BASEURL } from '../../utils/config';
 import Editor from './Editor';
 import Questions from './Questions';
 
@@ -18,12 +19,10 @@ const Student = () => {
         { input: string; output: string }[]
     >([{ input: '', output: '' }]);
     const [testInput, setTestInput] = useState<string>('');
-    const [classCode, setClassCode] = useState<string>('');
     const [testOutput, setTestOutput] = useState<string>('');
 
     useEffect(() => {
-        const ENDPOINT = 'http://localhost:5000/';
-        socket = io(ENDPOINT);
+        socket = io(BASEURL);
         socket.emit('addStudent', details, (assignment: IAssignment) => {
             const {
                 desc,
@@ -32,11 +31,9 @@ const Student = () => {
                 question,
                 outputDesc,
                 testCases,
-                classCode,
             } = assignment;
             setQuestion(question);
             setDesc(desc);
-            setClassCode(classCode);
             setClassName(className);
             setInputDesc(inputDesc);
             setOutputDesc(outputDesc);
@@ -67,15 +64,9 @@ const Student = () => {
                     <GridItem colSpan={6} rowSpan={6}>
                         <Editor
                             details={details}
-                            classCode={classCode}
                             testInput={testInput}
                             setTestOutput={setTestOutput}
                             testCases={testCases}
-                            desc={desc}
-                            className={className}
-                            question={question}
-                            outputDesc={outputDesc}
-                            inputDesc={inputDesc}
                         />
                     </GridItem>
                     <GridItem

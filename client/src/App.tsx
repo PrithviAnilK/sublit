@@ -1,14 +1,14 @@
-import { ChakraProvider, extendTheme, Switch } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { StoreProvider } from 'easy-peasy';
 import React from 'react';
 import { Route, Router } from 'react-router-dom';
+import store from './easy-peasy/store';
 import Class from './pages/Class';
 import Landing from './pages/Landing';
-import './styles/app.css';
-import { StoreProvider } from 'easy-peasy';
-import store from './easy-peasy/store';
-import history from './utils/history';
 import Submissions from './pages/Submissions';
-import Submitted from './pages/Submitted'
+import Submitted from './pages/Submitted';
+import './styles/app.css';
+import history from './utils/history';
 
 const theme = extendTheme({
     colors: {

@@ -15,8 +15,6 @@ import { io, Socket } from 'socket.io-client';
 import { BASEURL } from '../../utils/config';
 import Copy from './Copy';
 
-interface SubmissionsViewProps {}
-
 interface ISubmission {
     submitted: boolean;
     name: string;
@@ -26,7 +24,7 @@ interface ISubmission {
 }
 
 let socket: Socket;
-const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
+const SubmissionsView = () => {
     const {
         details: { classCode },
     } = useStoreState((store: any) => store.auth);
@@ -35,7 +33,7 @@ const SubmissionsView: React.FC<SubmissionsViewProps> = ({}) => {
     useEffect(() => {
         socket = io(BASEURL);
         socket.emit('join', { user: 'Teacher', classCode });
-    }, [BASEURL]);
+    }, [classCode]);
 
     useEffect(() => {
         socket.on('updateSubmissions', (students: ISubmission[]) => {

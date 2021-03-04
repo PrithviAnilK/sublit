@@ -39,7 +39,7 @@ const Student = () => {
             setOutputDesc(outputDesc);
             setTestCases(testCases);
         });
-    }, []);
+    }, [details]);
 
     return (
         <Box className="amin-gradient">

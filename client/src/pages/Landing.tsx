@@ -2,9 +2,7 @@ import { Box } from '@chakra-ui/react';
 import React from 'react';
 import Form from '../components/Form';
 
-interface LandingProps {}
-
-const Landing: React.FC<LandingProps> = ({}) => {
+const Landing = () => {
     return (
         <Box
             display="flex"

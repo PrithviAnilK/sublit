@@ -11,17 +11,21 @@ import {
     IStudent,
     submitStudent,
 } from './Assignment';
-import codeRouter from './routers/Code';
+import codeRouter from './routers/code';
+import testRouter from './routers/test';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
-const app: Application = express();
+const CLIENT_URL = process.env.PORT
+    ? process.env.CLIENT_URL
+    : 'http://localhost:3000';
 
+const app: Application = express();
 const httpServer = http.createServer(app);
 const io = require('socket.io')(httpServer, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: CLIENT_URL,
         methods: ['GET', 'POST'],
     },
 });
@@ -30,6 +34,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/code', codeRouter);
+app.use('/test', testRouter);
 
 io.on('connection', (socket: any) => {
     socket.on('join', (data: { classCode: string; user: string }) => {
